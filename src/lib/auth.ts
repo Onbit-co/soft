@@ -12,8 +12,7 @@ function hashToken(value: string): string {
 export async function verifyPassword(password: string): Promise<boolean> {
   return await verifyStoredPassword(password);
 }
-
-export function createSessionToken(): string {
+export async function createSessionToken(): Promise<string> {
   const timestamp = Date.now().toString();
   const random = crypto.randomBytes(16).toString("hex");
   const raw = `${timestamp}-${random}`;
@@ -37,7 +36,7 @@ export function validateSessionToken(token: string): boolean {
   return true;
 }
 
-export function getSessionFromCookies(): boolean {
+export async function getSessionFromCookies(): Promise<boolean> {
   try {
     const cookieStore = cookies();
     const session = cookieStore.get(AUTH_COOKIE);
@@ -48,7 +47,7 @@ export function getSessionFromCookies(): boolean {
   }
 }
 
-export function isAuthenticated(): boolean {
+export async function isAuthenticated(): Promise<boolean> {
   return getSessionFromCookies();
 }
 
