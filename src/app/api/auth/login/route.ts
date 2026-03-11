@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const token = createSessionToken();
+    // Línea crítica — agregar await
+    const token = await createSessionToken(); // ← ESTE ES EL FIX PRINCIPAL
 
     const response = NextResponse.json({ success: true });
     response.cookies.set(AUTH_COOKIE, token, {
